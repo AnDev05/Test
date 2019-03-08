@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">IDog</string>
+    <string name="confirm">Confirm</string>
+    <string name="close_msg">Do you want to leave?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="opps">Opps!</string>
+</resources>
