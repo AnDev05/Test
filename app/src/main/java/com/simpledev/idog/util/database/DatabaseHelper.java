@@ -70,6 +70,11 @@ public class DatabaseHelper extends DaoMaster.OpenHelper implements RxDatabaseHe
     }
 
     @Override
+    public void saveNumberOfBreed(Long id, int size) {
+        getDaoSession().getBreedDao().load(id).setNumberOfImage((long) size);
+    }
+
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         super.onUpgrade(db, oldVersion, newVersion);
     }

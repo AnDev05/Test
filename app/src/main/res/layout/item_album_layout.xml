@@ -12,15 +12,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <FrameLayout
+            android:layout_margin="2dp"
+            android:id="@+id/imv_thumb_album_layout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/imv_thumb_album"
-            android:src="@color/colorPrimary"
-            />
+            android:layout_height="100dp">
+
+            <ImageView
+                android:padding="2dp"
+                android:id="@+id/imv_thumb_album"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:layout_gravity="center"
+                app:indicatorColor="@color/placeholder_color"
+                android:id="@+id/prg_place_holder"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                app:indicatorName="BallSpinFadeLoaderIndicator"
+                />
+
+        </FrameLayout>
 
         <TextView
             android:textSize="16sp"
@@ -30,12 +48,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Recent"
-            app:layout_constraintLeft_toRightOf="@id/imv_thumb_album"
+            app:layout_constraintLeft_toRightOf="@id/imv_thumb_album_layout"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
         <TextView
+            android:textColor="@color/placeholder_color"
             android:id="@+id/tv_image_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

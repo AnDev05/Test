@@ -2,15 +2,14 @@ package com.simpledev.idog.injection;
 
 import android.content.Context;
 
-import com.simpledev.idog.BuildConfig;
 import com.simpledev.idog.network.request.Apis;
-import com.simpledev.idog.util.Commons;
 import com.simpledev.idog.util.Constants;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -27,9 +26,24 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    Apis provideApiService(OkHttpClient client, GsonConverterFactory gson, RxJava2CallAdapterFactory rxAdapter) {
+    @Named(Constants.Apis.DOG_CEO_URL)
+    Apis providedDogCEOService(OkHttpClient client, GsonConverterFactory gson, RxJava2CallAdapterFactory rxAdapter) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Commons.BASE_API_URL)
+                .baseUrl(Constants.Apis.DOG_CEO_URL)
+                .client(client)
+                .addConverterFactory(gson)
+                .addCallAdapterFactory(rxAdapter)
+                .build();
+
+        return retrofit.create(Apis.class);
+    }
+
+    @Provides
+    @Singleton
+    @Named(Constants.Apis.RANDOM_DOG_URL)
+    Apis provideRandomDogService(OkHttpClient client, GsonConverterFactory gson, RxJava2CallAdapterFactory rxAdapter) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.Apis.RANDOM_DOG_URL)
                 .client(client)
                 .addConverterFactory(gson)
                 .addCallAdapterFactory(rxAdapter)

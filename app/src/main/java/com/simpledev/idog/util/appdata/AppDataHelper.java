@@ -3,14 +3,16 @@ package com.simpledev.idog.util.appdata;
 import com.simpledev.idog.interactor.model.Breed;
 import com.simpledev.idog.interactor.model.DaoSession;
 import com.simpledev.idog.network.request.Apis;
-import com.simpledev.idog.network.response.BreedListResponse;
 import com.simpledev.idog.network.response.BreedResponse;
+import com.simpledev.idog.network.response.RandomDogResponse;
+import com.simpledev.idog.util.Constants;
 import com.simpledev.idog.util.database.RxDatabaseHelper;
 import com.simpledev.idog.util.database.RxPreferenceHelper;
 
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
@@ -18,16 +20,19 @@ import io.reactivex.Single;
 
 @Singleton
 public class AppDataHelper implements RxAppDataHelper {
-    private Apis mApis;
+    private Apis ceoDogApis;
+    private Apis randomDogAPis;
     private RxDatabaseHelper mDatabaseHelper;
     private RxPreferenceHelper mPreferenceHelper;
 
     @Inject
-    public AppDataHelper(Apis mApis, RxDatabaseHelper mDatabaseHelper, RxPreferenceHelper mPreferenceHelper) {
-        this.mApis = mApis;
+    public AppDataHelper(@Named(Constants.Apis.DOG_CEO_URL) Apis ceoDogApis,@Named(Constants.Apis.RANDOM_DOG_URL) Apis randomDogAPis, RxDatabaseHelper mDatabaseHelper, RxPreferenceHelper mPreferenceHelper) {
+        this.ceoDogApis = ceoDogApis;
+        this.randomDogAPis = randomDogAPis;
         this.mDatabaseHelper = mDatabaseHelper;
         this.mPreferenceHelper = mPreferenceHelper;
     }
+
 
     @Override
     public DaoSession getDaoSession() {
@@ -52,6 +57,11 @@ public class AppDataHelper implements RxAppDataHelper {
     @Override
     public void clearBreedList() {
         mDatabaseHelper.clearBreedList();
+    }
+
+    @Override
+    public void saveNumberOfBreed(Long id, int size) {
+        mDatabaseHelper.saveNumberOfBreed(id, size);
     }
 
 
@@ -92,11 +102,16 @@ public class AppDataHelper implements RxAppDataHelper {
 
     @Override
     public Single<BreedResponse> getAllImageOfBreed(String baseBreed, String subBreed) {
-        return mApis.getAllImageOfBreed(baseBreed, subBreed);
+        return ceoDogApis.getAllImageOfBreed(baseBreed, subBreed);
     }
 
     @Override
     public Single<BreedResponse> getAllImageOfBreed(String baseBreed) {
-        return mApis.getAllImageOfBreed(baseBreed);
+        return ceoDogApis.getAllImageOfBreed(baseBreed);
+    }
+
+    @Override
+    public Single<RandomDogResponse> getRandomDog() {
+        return randomDogAPis.getRandomDog();
     }
 }

@@ -7,11 +7,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.simpledev.idog.BuildConfig;
 import com.simpledev.idog.interactor.BaseInteractor;
 import com.simpledev.idog.interactor.model.Breed;
 import com.simpledev.idog.presenter.helper.OnDataReadyListener;
-import com.simpledev.idog.util.Commons;
 import com.simpledev.idog.util.Constants;
 import com.simpledev.idog.util.appdata.RxAppDataHelper;
 
@@ -32,20 +30,6 @@ public class BaseInteractorImpl implements BaseInteractor {
     }
 
     protected RxAppDataHelper mAppDataHelper;
-
-    protected void setEndPoint(int number) {
-        switch (number) {
-            case 1: {
-                Commons.BASE_API_URL = BuildConfig.API_BASE_URL;
-                break;
-            }
-            case 2: {
-                break;
-            }
-            default:
-                Commons.BASE_API_URL = "";
-        }
-    }
 
     @Override
     public void initResource(final OnDataReadyListener<Breed> dataListener) {

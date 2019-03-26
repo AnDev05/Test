@@ -2,6 +2,7 @@ package com.simpledev.idog.presenter.impl;
 
 import android.support.annotation.NonNull;
 
+import com.simpledev.idog.interactor.model.Breed;
 import com.simpledev.idog.network.response.BreedResponse;
 import com.simpledev.idog.presenter.AlbumDetailPresenter;
 import com.simpledev.idog.util.BaseSingleObserver;
@@ -11,7 +12,6 @@ import com.simpledev.idog.interactor.AlbumDetailInteractor;
 
 import javax.inject.Inject;
 
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -56,12 +56,12 @@ public final class AlbumDetailPresenterImpl extends BasePresenterImpl<AlbumDetai
 
 
     @Override
-    public void getAllImagesOfBreed(final String baseBreed, String subBreed) {
+    public void getAllImagesOfBreed(final Breed breed) {
         getView().showLoading();
 
-        if(Commons.isNullOrEmpty(subBreed)){
+        if(Commons.isNullOrEmpty(breed.getSubBreed())) {
             mInteractor
-                    .getAllImagesOfBreed(baseBreed)
+                    .getAllImagesOfBreed(breed.getBaseBreed())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new BaseSingleObserver<BreedResponse>() {
@@ -75,6 +75,8 @@ public final class AlbumDetailPresenterImpl extends BasePresenterImpl<AlbumDetai
                             Timber.d("On get breeds success");
                             getView().hideLoading();
                             getView().updateBreedDetail(breedResponse.getListBreedImages());
+
+                            mInteractor.saveNumberOfBreed(breed.getId(), breedResponse.getListBreedImages().size());
                         }
                         @Override
                         public void onError(Throwable e) {
@@ -87,7 +89,7 @@ public final class AlbumDetailPresenterImpl extends BasePresenterImpl<AlbumDetai
 
         }else{
             mInteractor
-                    .getAllImagesOfBreed(baseBreed,subBreed)
+                    .getAllImagesOfBreed(breed.getBaseBreed(), breed.getSubBreed())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new BaseSingleObserver<BreedResponse>() {
@@ -101,6 +103,7 @@ public final class AlbumDetailPresenterImpl extends BasePresenterImpl<AlbumDetai
                             Timber.d("On get breeds success");
                             getView().hideLoading();
                             getView().updateBreedDetail(breedResponse.getListBreedImages());
+                            mInteractor.saveNumberOfBreed(breed.getId(), breedResponse.getListBreedImages().size());
                         }
 
                         @Override

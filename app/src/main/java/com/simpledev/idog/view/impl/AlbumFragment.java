@@ -45,6 +45,9 @@ public final class AlbumFragment extends BaseFragment<AlbumPresenter, AlbumView>
     private AlbumRvAdapter mAdapter;
     private List<Breed> mAlbumList;
 
+    public AlbumFragment() {
+    }
+
     public static AlbumFragment getInstance() {
         if(mAlbumFragment == null) {
             mAlbumFragment = new AlbumFragment();
@@ -114,11 +117,7 @@ public final class AlbumFragment extends BaseFragment<AlbumPresenter, AlbumView>
     @Override
     public void onItemClick(Breed breed) {
         Intent intent = new Intent(getActivity(), AlbumDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.BundleKey.BASE_BREED, breed.getBaseBreed());
-        bundle.putString(Constants.BundleKey.SUB_BREED, breed.getSubBreed());
-        bundle.putString(Constants.BundleKey.NAME_BREED, breed.getBreedName());
-        intent.putExtras(bundle);
+        intent.putExtra(Constants.BundleKey.BREED, breed);
         startActivity(intent);
     }
 }

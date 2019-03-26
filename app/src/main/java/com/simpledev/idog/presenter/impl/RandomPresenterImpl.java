@@ -1,12 +1,22 @@
 package com.simpledev.idog.presenter.impl;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.simpledev.idog.interactor.model.RandomDog;
+import com.simpledev.idog.network.response.BreedResponse;
+import com.simpledev.idog.network.response.RandomDogResponse;
 import com.simpledev.idog.presenter.RandomPresenter;
+import com.simpledev.idog.util.BaseSingleObserver;
+import com.simpledev.idog.util.Commons;
 import com.simpledev.idog.view.RandomView;
 import com.simpledev.idog.interactor.RandomInteractor;
 
 import javax.inject.Inject;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public final class RandomPresenterImpl extends BasePresenterImpl<RandomView> implements RandomPresenter {
     /**
@@ -25,8 +35,9 @@ public final class RandomPresenterImpl extends BasePresenterImpl<RandomView> imp
     @Override
     public void onStart(boolean viewCreated) {
         super.onStart(viewCreated);
-
-        // Your code here. Your view is available using mView and will not be null until next onStop()
+        if(viewCreated) {
+            getRandomDog();
+        }
     }
 
     @Override
@@ -44,5 +55,30 @@ public final class RandomPresenterImpl extends BasePresenterImpl<RandomView> imp
          */
 
         super.onPresenterDestroyed();
+    }
+
+    @Override
+    public void getRandomDog() {
+        getView().showLoading();
+        mInteractor.loadRandomDog().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSingleObserver<RandomDogResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(RandomDogResponse randomDogResponse) {
+                        getView().hideLoading();
+
+                        RandomDog dog = new RandomDog();
+                        dog.setUrl(randomDogResponse.getUrl());
+                        dog.setType(Commons.getType(randomDogResponse.getUrl()));
+
+                        getView().initView(dog);
+
+                    }
+                });
     }
 }

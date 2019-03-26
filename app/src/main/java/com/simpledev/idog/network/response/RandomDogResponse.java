@@ -6,15 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class BreedListResponse extends BaseResponse{
+@Setter
+public class RandomDogResponse extends BaseResponse {
+    @SerializedName("url")
     @Expose
-    @SerializedName("status")
-    private String status;
-
-    @Expose
-    @SerializedName("message")
-    private Object listBreeds;
+    private String url;
 }
-

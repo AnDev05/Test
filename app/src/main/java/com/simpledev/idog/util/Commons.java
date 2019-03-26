@@ -17,8 +17,6 @@ public class Commons {
 
     }
 
-    public static String BASE_API_URL = BuildConfig.API_BASE_URL;
-
     public static boolean isNullOrEmpty(Object input) {
         boolean isNullOrEmpty;
         if (input == null) {
@@ -50,5 +48,12 @@ public class Commons {
             Timber.e(e);
         }
         return false;
+    }
+
+    public static int getType(String url) {
+        if(url.endsWith((".png")) || url.endsWith(".gif") || url.endsWith(".jpg") || url.endsWith(".webp")
+                || url.endsWith(".bmp") || url.endsWith("jpeg"))
+            return 1;
+        return 0;
     }
 }

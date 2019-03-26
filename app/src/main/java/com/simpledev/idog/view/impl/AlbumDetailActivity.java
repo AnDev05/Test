@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.simpledev.idog.R;
 import com.simpledev.idog.injection.DaggerAlbumDetailViewComponent;
+import com.simpledev.idog.interactor.model.Breed;
 import com.simpledev.idog.util.Constants;
 import com.simpledev.idog.view.AlbumDetailView;
 import com.simpledev.idog.presenter.loader.PresenterFactory;
@@ -21,6 +22,7 @@ import com.simpledev.idog.view.adapter.AlbumDetailRvAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -30,7 +32,7 @@ public final class AlbumDetailActivity extends BaseActivity<AlbumDetailPresenter
     @Inject
     PresenterFactory<AlbumDetailPresenter> mPresenterFactory;
 
-    private Bundle mBundle;
+    private Breed mBreed;
 
     private AlbumDetailRvAdapter mRvAdapter;
 
@@ -41,7 +43,7 @@ public final class AlbumDetailActivity extends BaseActivity<AlbumDetailPresenter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_detail);
 
-        mBundle = getIntent().getExtras();
+        mBreed = Objects.requireNonNull(getIntent().getExtras()).getParcelable(Constants.BundleKey.BREED);
 
         initRecycleView();
         setupToolbar();
@@ -49,7 +51,7 @@ public final class AlbumDetailActivity extends BaseActivity<AlbumDetailPresenter
 
     private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(mBundle.getString(Constants.BundleKey.NAME_BREED, getString(R.string.app_name)));
+        toolbar.setTitle(mBreed.getBreedName());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -80,7 +82,7 @@ public final class AlbumDetailActivity extends BaseActivity<AlbumDetailPresenter
         super.onPostCreate(savedInstanceState);
         Timber.d("On post created");
         if(mPresenter != null) {
-            mPresenter.getAllImagesOfBreed(mBundle.getString(Constants.BundleKey.BASE_BREED), mBundle.getString(Constants.BundleKey.SUB_BREED));
+            mPresenter.getAllImagesOfBreed(mBreed);
         }
     }
 

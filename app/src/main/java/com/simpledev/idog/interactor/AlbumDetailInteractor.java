@@ -9,4 +9,6 @@ public interface AlbumDetailInteractor extends BaseInteractor {
     Single<BreedResponse> getAllImagesOfBreed(String baseBreed, String subBreed);
 
     Single<BreedResponse> getAllImagesOfBreed(String baseBreed);
+
+    void saveNumberOfBreed(Long id, int size);
 }

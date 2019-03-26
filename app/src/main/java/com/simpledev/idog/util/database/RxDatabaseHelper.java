@@ -27,4 +27,6 @@ public interface RxDatabaseHelper {
      * Clear all breed in db
      */
     void clearBreedList();
+
+    void saveNumberOfBreed(Long id, int size);
 }

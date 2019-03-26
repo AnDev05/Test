@@ -21,13 +21,16 @@ public final class AlbumDetailInteractorImpl extends BaseInteractorImpl implemen
 
     @Override
     public Single<BreedResponse> getAllImagesOfBreed(String baseBreed, String subBreed) {
-        setEndPoint(1);
         return mAppDataHelper.getAllImageOfBreed(baseBreed,subBreed);
     }
 
     @Override
     public Single<BreedResponse> getAllImagesOfBreed(String baseBreed) {
-        setEndPoint(1);
         return mAppDataHelper.getAllImageOfBreed(baseBreed);
+    }
+
+    @Override
+    public void saveNumberOfBreed(Long id, int size) {
+        mAppDataHelper.saveNumberOfBreed(id, size);
     }
 }

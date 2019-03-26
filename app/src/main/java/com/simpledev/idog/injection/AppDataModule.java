@@ -11,6 +11,7 @@ import com.simpledev.idog.util.database.PreferenceHelper;
 import com.simpledev.idog.util.database.RxDatabaseHelper;
 import com.simpledev.idog.util.database.RxPreferenceHelper;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -20,8 +21,8 @@ import dagger.Provides;
 public class AppDataModule {
     @Provides
     @Singleton
-    public RxAppDataHelper provideAppDataHelper(Apis mApis, RxDatabaseHelper databaseHelper, RxPreferenceHelper preferenceHelper) {
-        return new AppDataHelper(mApis, databaseHelper, preferenceHelper);
+    public RxAppDataHelper provideAppDataHelper(@Named(Constants.Apis.DOG_CEO_URL) Apis ceoDogApis, @Named(Constants.Apis.RANDOM_DOG_URL) Apis randomDogApis, RxDatabaseHelper databaseHelper, RxPreferenceHelper preferenceHelper) {
+        return new AppDataHelper(ceoDogApis, randomDogApis, databaseHelper, preferenceHelper);
     }
     @Provides
     @Singleton

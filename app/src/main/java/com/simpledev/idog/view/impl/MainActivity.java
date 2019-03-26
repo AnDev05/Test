@@ -5,19 +5,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.simpledev.idog.App;
 import com.simpledev.idog.R;
-import com.simpledev.idog.util.Constants;
-import com.simpledev.idog.util.database.PreferenceHelper;
 import com.simpledev.idog.util.database.RxPreferenceHelper;
 import com.simpledev.idog.view.MainView;
 import com.simpledev.idog.presenter.loader.PresenterFactory;
@@ -27,7 +23,6 @@ import com.simpledev.idog.injection.MainViewModule;
 import com.simpledev.idog.injection.DaggerMainViewComponent;
 import com.simpledev.idog.view.adapter.MainViewPagerAdapter;
 import com.simpledev.idog.view.custom.CustomTabLayout;
-import com.simpledev.idog.view.helper.OnLoadAlbumListener;
 import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.PowerMenu;
 import com.skydoves.powermenu.PowerMenuItem;
@@ -57,7 +52,6 @@ public final class MainActivity extends BaseActivity<MainPresenter, MainView> im
     @Inject
     RxPreferenceHelper mPreferenceHelper;
 
-    private AlbumFragment mAlbumFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +64,22 @@ public final class MainActivity extends BaseActivity<MainPresenter, MainView> im
         setupTabLayout();
 
         createMenu();
+
+        setUpGestureListener();
+    }
+
+    private void setUpGestureListener() {
+
     }
 
     private void setupTabLayout() {
-        mAlbumFragment = AlbumFragment.getInstance();
+        AlbumFragment albumFragment = AlbumFragment.getInstance();
         MainViewPagerAdapter viewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.setFragment(new RandomFragment(), "Random");
-        viewPagerAdapter.setFragment(mAlbumFragment, "Albums");
+
+        RandomFragment randomFragment = RandomFragment.getInstance();
+
+        viewPagerAdapter.setFragment(randomFragment, "Random");
+        viewPagerAdapter.setFragment(albumFragment, "Albums");
         mViewPager.setAdapter(viewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.addOnTabSelectedListener(this);
@@ -152,4 +155,5 @@ public final class MainActivity extends BaseActivity<MainPresenter, MainView> im
     public void onBackPressed() {
          showCloseAppPopup();
     }
+
 }

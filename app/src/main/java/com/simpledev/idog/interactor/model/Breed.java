@@ -32,22 +32,6 @@ public class Breed extends BaseModel implements Parcelable {
     private String baseBreed;
     @Property(nameInDb = "subBreed")
     private String subBreed;
-    @Generated(hash = 1419761915)
-    public Breed(Long id, String breedName, String breadApi, String imageUrl,
-            Long numberOfImage, String firebaseId, String baseBreed,
-            String subBreed) {
-        this.id = id;
-        this.breedName = breedName;
-        this.breadApi = breadApi;
-        this.imageUrl = imageUrl;
-        this.numberOfImage = numberOfImage;
-        this.firebaseId = firebaseId;
-        this.baseBreed = baseBreed;
-        this.subBreed = subBreed;
-    }
-    @Generated(hash = 1184883001)
-    public Breed() {
-    }
 
     protected Breed(Parcel in) {
         if (in.readByte() == 0) {
@@ -68,6 +52,24 @@ public class Breed extends BaseModel implements Parcelable {
         subBreed = in.readString();
     }
 
+    @Generated(hash = 1419761915)
+    public Breed(Long id, String breedName, String breadApi, String imageUrl,
+            Long numberOfImage, String firebaseId, String baseBreed,
+            String subBreed) {
+        this.id = id;
+        this.breedName = breedName;
+        this.breadApi = breadApi;
+        this.imageUrl = imageUrl;
+        this.numberOfImage = numberOfImage;
+        this.firebaseId = firebaseId;
+        this.baseBreed = baseBreed;
+        this.subBreed = subBreed;
+    }
+
+    @Generated(hash = 1184883001)
+    public Breed() {
+    }
+
     public static final Creator<Breed> CREATOR = new Creator<Breed>() {
         @Override
         public Breed createFromParcel(Parcel in) {
@@ -79,55 +81,6 @@ public class Breed extends BaseModel implements Parcelable {
             return new Breed[size];
         }
     };
-
-    public Long getId() {
-        return this.id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getBreedName() {
-        return this.breedName;
-    }
-    public void setBreedName(String breedName) {
-        this.breedName = breedName;
-    }
-    public String getBreadApi() {
-        return this.breadApi;
-    }
-    public void setBreadApi(String breadApi) {
-        this.breadApi = breadApi;
-    }
-    public String getImageUrl() {
-        return this.imageUrl;
-    }
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-    public Long getNumberOfImage() {
-        return this.numberOfImage;
-    }
-    public void setNumberOfImage(Long numberOfImage) {
-        this.numberOfImage = numberOfImage;
-    }
-    public String getFirebaseId() {
-        return this.firebaseId;
-    }
-    public void setFirebaseId(String firebaseId) {
-        this.firebaseId = firebaseId;
-    }
-    public String getBaseBreed() {
-        return this.baseBreed;
-    }
-    public void setBaseBreed(String baseBreed) {
-        this.baseBreed = baseBreed;
-    }
-    public String getSubBreed() {
-        return this.subBreed;
-    }
-    public void setSubBreed(String subBreed) {
-        this.subBreed = subBreed;
-    }
 
     @Override
     public int describeContents() {
@@ -154,5 +107,69 @@ public class Breed extends BaseModel implements Parcelable {
         dest.writeString(firebaseId);
         dest.writeString(baseBreed);
         dest.writeString(subBreed);
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBreedName() {
+        return this.breedName;
+    }
+
+    public void setBreedName(String breedName) {
+        this.breedName = breedName;
+    }
+
+    public String getBreadApi() {
+        return this.breadApi;
+    }
+
+    public void setBreadApi(String breadApi) {
+        this.breadApi = breadApi;
+    }
+
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Long getNumberOfImage() {
+        return this.numberOfImage;
+    }
+
+    public void setNumberOfImage(Long numberOfImage) {
+        this.numberOfImage = numberOfImage;
+    }
+
+    public String getFirebaseId() {
+        return this.firebaseId;
+    }
+
+    public void setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
+    }
+
+    public String getBaseBreed() {
+        return this.baseBreed;
+    }
+
+    public void setBaseBreed(String baseBreed) {
+        this.baseBreed = baseBreed;
+    }
+
+    public String getSubBreed() {
+        return this.subBreed;
+    }
+
+    public void setSubBreed(String subBreed) {
+        this.subBreed = subBreed;
     }
 }
